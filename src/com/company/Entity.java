@@ -30,31 +30,39 @@ class Plocha {
     public Hrac zjistiViteze(Hrac hrac1, Hrac hrac2){
 
         Hrac[] hraci = {hrac1, hrac2};
+        Hrac winner = null;
 
         for(int i = 0; i < hraci.length; i++) {
+
+            winner = hraci[i];
             //vodorovne
             for (int radek = 0; radek < plocha.length; radek++) {
-                if( (plocha[radek][0] != null) && (plocha[radek][1] != null) && (plocha[radek][2] != null)) {
-                    if (plocha[radek][0].equals(hraci[i].getSymbol()) && plocha[radek][1].equals(hraci[i].getSymbol())
-                            && plocha[radek][2].equals(hraci[i].getSymbol())) return hraci[i];
-                }
-            }
-            //svisle
-            for (int sloupec = 0; sloupec < plocha[0].length; sloupec++) {
-                if( (plocha[0][sloupec] != null) && (plocha[1][sloupec] != null) && (plocha[2][sloupec] != null)) {
-                    if (plocha[0][sloupec].equals(hraci[i].getSymbol()) && plocha[1][sloupec].equals(hraci[i].getSymbol())
-                            && plocha[2][sloupec].equals(hraci[i].getSymbol())) return hraci[i];
-                }
-            }
+
+                for (int sloupec = 0; sloupec < plocha[radek].length; sloupec++) {
+                    if(plocha[radek][sloupec] != null){
+                        if(!plocha[radek][sloupec].equals(hraci[i].getSymbol())) {
+                            winner = null;
+                            break;
+                        }
+                    }
+                    if(plocha[radek][sloupec] == null){
+                       winner=null;
+                       break;
+                    }
+                } //konec vnitrni
+                if(winner!=null) return winner;
+                winner = hraci[i];
+            } //konec vnejsi
+
             //diagonalne
-            if( (plocha[0][0] != null) && (plocha[1][1] != null) && (plocha[2][2] != null)) {
+            /*if( (plocha[0][0] != null) && (plocha[1][1] != null) && (plocha[2][2] != null)) {
                 if (plocha[0][0].equals(hraci[i].getSymbol()) && plocha[1][1].equals(hraci[i].getSymbol())
-                        && plocha[2][2].equals(hraci[i].getSymbol())) return hraci[i];
+                        && plocha[2][2].equals(hraci[i].getSymbol())) winner = hraci[i];
             }
             if((plocha[0][2] != null) && (plocha[1][1] != null) && (plocha[2][0] != null)){
                 if (plocha[0][2].equals(hraci[i].getSymbol()) && plocha[1][1].equals(hraci[i].getSymbol())
-                        && plocha[2][0].equals(hraci[i].getSymbol())) return hraci[i];
-            }
+                        && plocha[2][0].equals(hraci[i].getSymbol())) winner = hraci[i];
+            }*/
         }
         return null;
     }
